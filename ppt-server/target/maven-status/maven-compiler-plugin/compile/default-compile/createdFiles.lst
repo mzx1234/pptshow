@@ -1,0 +1,7 @@
+com\mzx\pptserver\thrift\proxy\ThriftParsePPTServiceProxy.class
+com\mzx\pptserver\thrift\service\ThriftServiceStartUpFactory.class
+com\mzx\pptserver\thrift\service\processor\ParserPPTServiceProcessor.class
+com\mzx\pptserver\thrift\service\ThriftServiceStartUp.class
+com\mzx\pptserver\thrift\service\processor\OptionPPTServiceProcessor.class
+com\mzx\pptserver\thrift\service\BaseThriftService.class
+com\mzx\pptserver\thrift\proxy\ThriftOptionServiceProxy.class

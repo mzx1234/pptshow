@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+       <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+              <property name="maxActive" value="${redis.maxActive}"></property>
+              <property name="maxIdle" value="${redis.maxIdle}"></property>
+              <property name="maxWait" value="${redis.maxWait}"></property>
+              <property name="testOnBorrow" value="${redis.testOnBorrow}"></property>
+       </bean>
+
+       <bean id="redisPool" class="redis.clients.jedis.JedisPool">
+              <constructor-arg name="poolConfig" ref="jedisPoolConfig"/>
+              <constructor-arg name="host" value="${redis.host}"/>
+              <constructor-arg name="port" value="${redis.port}"/>
+              <constructor-arg name="timeout" value="${redis.timeout}"></constructor-arg>
+       </bean>
+       <bean id="redisUtil" class="com.mzx.pptserver.utility.RedisUtil">
+              <property name="REDIS_POOL" ref="redisPool"></property>
+              <property name="EXPIRETIME" value="${redis.expiretime}"></property>
+       </bean>
+</beans>

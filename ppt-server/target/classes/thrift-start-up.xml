@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+       <bean id="parserPPTServiceProcessor" class="com.mzx.pptserver.thrift.service.processor.ParserPPTServiceProcessor">
+              <constructor-arg name="iface" ref="thriftParsePPTServiceProxy"/>
+       </bean>
+
+       <bean id="optionPPTServiceProcessor" class="com.mzx.pptserver.thrift.service.processor.OptionPPTServiceProcessor">
+              <constructor-arg name="iface" ref="thriftOptionServiceProxy"/>
+       </bean>
+
+       <bean id="serviceStartUp" class="com.mzx.pptserver.thrift.service.ThriftServiceStartUp">
+             <property name="ip" value="${thrift.ip}"/>
+              <property name="port" value="${thrift.port}"/>
+              <property name="serverMap">
+                     <map>
+                            <entry key="${thrift.serviceName.parsePPTService}" value-ref="parserPPTServiceProcessor"/>
+                            <entry key="${thrift.serviceName.optionPPTService}" value-ref="optionPPTServiceProcessor"/>
+                     </map>
+              </property>
+       </bean>
+</beans>
