@@ -87,12 +87,18 @@ public class POIParse {
 
 
     private void toRedis() {
-        logger.info("toRedis function start");
-        for(int cur = 0; cur < globalApplication.getLen(); cur++) {
-            BufferedImage img = getImag(cur);
-            redisUtil.hSetObject(globalApplication.getKey(), cur+"", img);
-        }
-        logger.info("toRedis function finish");
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                logger.info("toRedis function start");
+                for(int cur = 0; cur < globalApplication.getLen(); cur++) {
+                    BufferedImage img = getImag(cur);
+                    redisUtil.hSetObject(globalApplication.getKey(), cur+"", img);
+                }
+                logger.info("toRedis function finish");
+            }
+        }).start();
+
     }
 
     private byte[] getFromRedis(String file) {
@@ -109,7 +115,7 @@ public class POIParse {
         getPPTSlides(file);
         globalApplication.setLen(len);
         toRedis();
-        return redisUtil.hGetBytes(globalApplication.getKey(), "0");
+        return SerializeUtil.serializeImg(getImag(0));
     }
 
     public byte[] parsePPTXAndGetFirst(String file) throws Exception{
@@ -120,7 +126,7 @@ public class POIParse {
         getPPTXSlides(file);
         innitGlobal(file);
         toRedis();
-        return redisUtil.hGetBytes(globalApplication.getKey(), "0");
+        return SerializeUtil.serializeImg(getImag(0));
     }
 
 

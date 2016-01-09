@@ -10,6 +10,8 @@ import org.apache.thrift.TException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+
 
 /**
  * Created by zison on 2016/1/7.
@@ -19,11 +21,17 @@ public class ThriftParsePPTServiceProxy implements TParsePPTService.Iface{
 
     @Autowired
     private ParseService parseService;
+    @Autowired
     private GlobalApplication globalApplication;
     @Override
     public PPTBytes parsePPTAndGetFirst(PPTDetail parm) throws TException {
         String path = parm.path;
-        byte[] bytes = parseService.parsePPTFile(path);
+        byte[] bytes;
+        if(isPPT(path))
+            bytes = parseService.parsePPTFile(path);
+        else
+            bytes = parseService.parsePPTXFile(path);
+
         PPTBytes pptBytes = new PPTBytes();
         PPTDetail pptDetail = new PPTDetail();
         pptDetail.path = globalApplication.getPath();
@@ -33,5 +41,13 @@ public class ThriftParsePPTServiceProxy implements TParsePPTService.Iface{
         pptBytes.setBytes(bytes);
 
         return pptBytes;
+    }
+
+    private boolean isPPT(String path) {
+        String fileName = (new File(path)).getName();
+        if(fileName.endsWith("ppt"))
+            return true;
+        else
+            return false;
     }
 }
