@@ -37,13 +37,10 @@ public class ThriftClient {
 
         TParsePPTService.Client parseClient = new TParsePPTService.Client(mp1);
 
-
         transport.open();
         PPTDetail detail = new PPTDetail();
-        detail.setPath("C:\\Users\\zison\\Desktop\\java.ppt");
+        detail.setPath("C:\\Users\\zison\\Desktop\\a.pptx");
         return parseClient.parsePPTAndGetFirst(detail).getBytes();
-
-
     }
 
 

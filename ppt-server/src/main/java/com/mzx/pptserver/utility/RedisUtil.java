@@ -157,6 +157,7 @@ public class RedisUtil {
 		if (REDIS_POOL != null) {
 			try {
 				jedis = REDIS_POOL.getResource();
+				log.info("connect to redis success");
 //				if ((!REDIS_FLAG) && (jedis != null)) {// 如果之前redis服务异常，现在正常拿到连接则将redis中數據清空
 //					REDIS_FLAG = true;
 //					if (StringUtils.isEmpty(CLEAR_PATTERN)) {
@@ -576,6 +577,7 @@ public class RedisUtil {
 			conn = getRedisConn();
 			result=conn.hset(key.getBytes(), field.getBytes(), SerializeUtil.serializeImg((BufferedImage) value));
 		} catch (Exception ex) {
+			log.info("connect to redis fail");
 			returnBrokenRedisConn(conn);
 		} finally {
 			returnRedisConn(conn);

@@ -7,8 +7,7 @@ import com.mzx.pptserver.constant.PptTypeConstant.PPTType;
 import org.apache.poi.hslf.usermodel.HSLFSlide;
 import org.apache.poi.hslf.usermodel.HSLFSlideShow;
 import org.apache.poi.hslf.usermodel.HSLFSlideShowImpl;
-import org.apache.poi.xslf.usermodel.XMLSlideShow;
-import org.apache.poi.xslf.usermodel.XSLFSlide;
+import org.apache.poi.xslf.usermodel.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +48,8 @@ public class POIParse {
         pptSlideList = pptSlideShow.getSlides();
         pptType = PPTType.PPT;
         len = pptSlideList.size();
+
+
         logger.info("getPPTSlides function is finish");
     }
 
@@ -60,6 +61,7 @@ public class POIParse {
         pptxSlideList = pptxSlideShow.getSlides();
         pptType = PPTType.PPTX;
         len = pptxSlideList.size();
+
         logger.info("getPPTXSlides function is finish");
     }
 

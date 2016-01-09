@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+       <bean id="thriftConnectParm" class="com.mzx.pptui.bean.ThriftConnectParm">
+              <property name="ip" value="${thrift.ip}"/>
+              <property name="port" value="${thrift.port}"/>
+              <property name="timeOut" value="${thrift.timeout}"/>
+              <property name="parsePPTServiceName" value="${thrift.parsePPTServiceName}"/>
+              <property name="optionPPTServiceName" value="${thrift.optionPPTSeriveName}"/>
+       </bean>
+</beans>

@@ -1,11 +1,25 @@
 package com.mzx.pptui.ui;
 
+import com.mzx.pptui.application.GlobalApplication;
+import com.mzx.pptui.thrift.clientcallable.OptionPPTThriftClient;
+import com.mzx.pptui.thrift.clientcallable.ParsePPTThriftClient;
+import com.mzx.pptui.utility.PPTOption;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
 
 public class AndroidPPT extends JFrame {
+
+//    @Autowired
+//    private ParsePPTThriftClient parsePPTThriftClient;
+//    @Autowired
+//    private OptionPPTThriftClient optionPPTThriftClient;
+//    @Autowired
+//    private GlobalApplication globalApplication;
+
     protected MyButton _pre, _next, _big, _small, _load, _first, _last, _broadcastIP, _exit;
     JLabel _label;
 
@@ -56,28 +70,6 @@ public class AndroidPPT extends JFrame {
         _first = new MyButton("First");
         _last = new MyButton("Last");
         _exit = new MyButton("Exit");
-
-
-//        _load.setFocusable(false);						//È¥µô°´Å¥µÄ±ß¿ò
-//        _load.setBorderPainted(false);
-//        _broadcastIP.setFocusable(false);
-//        _broadcastIP.setBorderPainted(false);
-//        _big.setFocusable(false);
-//        _big.setBorderPainted(false);
-//        _small.setFocusable(false);
-//        _small.setBorderPainted(false);
-//        _pre.setFocusable(false);
-//        _pre.setBorderPainted(false);
-//        _next.setFocusable(false);
-//        _next.setBorderPainted(false);
-//        _first.setFocusable(false);
-//        _first.setBorderPainted(false);
-//        _last.setFocusable(false);
-//        _last.setBorderPainted(false);
-//        _exit.setFocusable(false);
-//        _exit.setBorderPainted(false);
-
-
 
         _p1 = new JPanel();
 
@@ -199,7 +191,9 @@ public class AndroidPPT extends JFrame {
 
         _next.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-
+                ++_currentPage;
+                ImageIcon ico = new ImageIcon(PPTOption.swichPage(_currentPage));
+                _label.setIcon(ico);
             }
         });
 
@@ -211,7 +205,9 @@ public class AndroidPPT extends JFrame {
 
         _load.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-
+                getPath();
+                ImageIcon ico = new ImageIcon(PPTOption.load(_Path));
+                _label.setIcon(ico);
             }
 
         });
