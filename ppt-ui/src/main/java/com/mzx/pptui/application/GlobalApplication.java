@@ -24,8 +24,20 @@ public class GlobalApplication {
         this.cur = cur;
     }
 
+
+    public int getLen() {
+        return len;
+    }
+
+    public void setLen(int len) {
+        this.len = len;
+    }
+
+
     private String path;
     private int cur;
+
+    private int len;
 
 
 }

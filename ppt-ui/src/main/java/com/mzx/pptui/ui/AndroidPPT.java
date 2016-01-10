@@ -1,10 +1,10 @@
 package com.mzx.pptui.ui;
 
 import com.mzx.pptui.application.GlobalApplication;
-import com.mzx.pptui.thrift.clientcallable.OptionPPTThriftClient;
-import com.mzx.pptui.thrift.clientcallable.ParsePPTThriftClient;
+import com.mzx.pptui.main.Main;
 import com.mzx.pptui.utility.PPTOption;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,12 +13,7 @@ import java.awt.event.*;
 
 public class AndroidPPT extends JFrame {
 
-//    @Autowired
-//    private ParsePPTThriftClient parsePPTThriftClient;
-//    @Autowired
-//    private OptionPPTThriftClient optionPPTThriftClient;
-//    @Autowired
-//    private GlobalApplication globalApplication;
+    private Logger logger = LoggerFactory.getLogger(getClass());
 
     protected MyButton _pre, _next, _big, _small, _load, _first, _last, _broadcastIP, _exit;
     JLabel _label;
@@ -170,30 +165,49 @@ public class AndroidPPT extends JFrame {
     protected void ButtonEvent() {
         _pre.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-
+                byte[] bytes = PPTOption.swichPage(--_currentPage);
+                if(bytes != null) {
+                    ImageIcon ico = new ImageIcon(bytes);
+                    _label.setIcon(ico);
+                }
+                else {
+                    logger.info("最后一页了");
+                    _currentPage++;
+                }
             }
 
         });
 
         _first.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-
+                ImageIcon ico = new ImageIcon(PPTOption.swichPage(0));
+                _label.setIcon(ico);
+                _currentPage = 0;
             }
 
         });
 
         _last.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-
+                GlobalApplication globalApplication = (GlobalApplication) Main.getBean("globalApplication");
+                ImageIcon ico = new ImageIcon(PPTOption.swichPage(globalApplication.getLen() - 1));
+                _label.setIcon(ico);
+                _currentPage = globalApplication.getLen() - 1;
             }
 
         });
 
         _next.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                ++_currentPage;
-                ImageIcon ico = new ImageIcon(PPTOption.swichPage(_currentPage));
-                _label.setIcon(ico);
+                byte[] bytes = PPTOption.swichPage(++_currentPage);
+                if(bytes != null) {
+                    ImageIcon ico = new ImageIcon(bytes);
+                    _label.setIcon(ico);
+                }
+                else {
+                    logger.info("最后一页了");
+                    _currentPage--;
+                }
             }
         });
 
@@ -206,6 +220,7 @@ public class AndroidPPT extends JFrame {
         _load.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 getPath();
+                _currentPage = 0;
                 ImageIcon ico = new ImageIcon(PPTOption.load(_Path));
                 _label.setIcon(ico);
             }

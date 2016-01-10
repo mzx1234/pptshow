@@ -624,6 +624,25 @@ public class RedisUtil {
 		}
 		return result;
 	}
+
+	/**
+	 * Return the number of items in a hash.
+	 * @param key
+	 * @return
+	 */
+	public Long hGetLen(String key) {
+		Long result = 0L;
+		Jedis conn = null;
+		try {
+			conn = getRedisConn();
+			result = conn.hlen(key.getBytes());
+		} catch (Exception ex) {
+			returnBrokenRedisConn(conn);
+		} finally {
+			returnRedisConn(conn);
+		}
+		return result;
+	}
 	
 	/**
 	 * 

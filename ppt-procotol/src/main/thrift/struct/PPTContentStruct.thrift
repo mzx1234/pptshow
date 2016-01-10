@@ -12,6 +12,8 @@ const string RES_SUCCESS_CODE = "00000";
         2:string fileName;
         #当前页
         3:i32 curPage;
+        #总页数
+        4:i32 len;
     }
 
     struct PPTBytes {

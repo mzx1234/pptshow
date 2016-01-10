@@ -6,7 +6,6 @@ import com.mzx.pptui.main.Main;
 import com.mzx.pptui.thrift.clientcallable.OptionPPTThriftClient;
 import com.mzx.pptui.thrift.clientcallable.ParsePPTThriftClient;
 
-import java.awt.image.BufferedImage;
 
 
 /**
@@ -21,12 +20,16 @@ public class PPTOption {
         globalApplication.setCur(0);
         ParsePPTThriftClient parsePPTThriftClient = (ParsePPTThriftClient) Main.getBean("parsePPTThriftClient");
         PPTBytes bytes = parsePPTThriftClient.task();
+        globalApplication.setLen(bytes.getPptDetail().getLen());
 //        return SerializeUtil.unserializeImg(bytes.getBytes());
         return bytes.getBytes();
     }
 
     public static byte[] swichPage(int cur)  {
         GlobalApplication globalApplication = (GlobalApplication) Main.getBean("globalApplication");
+        if(cur == globalApplication.getLen() || cur < 0) {
+            return null;
+        }
         globalApplication.setCur(cur);
         OptionPPTThriftClient optionPPTThriftClient = (OptionPPTThriftClient) Main.getBean("optionPPTThriftClient");
         byte[] bytes = optionPPTThriftClient.task().getBytes();

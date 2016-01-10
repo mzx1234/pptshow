@@ -109,9 +109,12 @@ public class POIParse {
     }
 
 
+
     public byte[] parsePPTAndGetFirst(String file) throws Exception{
+//        int pptLen =
         byte[] result = getFromRedis(file);
         if(result != null) {
+            globalApplication.setLen((redisUtil.hGetLen(globalApplication.getKey())).intValue());
             return result;
         }
         getPPTSlides(file);
@@ -123,6 +126,7 @@ public class POIParse {
     public byte[] parsePPTXAndGetFirst(String file) throws Exception{
         byte[] result = getFromRedis(file);
         if(result != null) {
+            globalApplication.setLen((redisUtil.hGetLen(globalApplication.getKey())).intValue());
             return result;
         }
         getPPTXSlides(file);
