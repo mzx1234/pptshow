@@ -1,5 +1,5 @@
-基金服务thrift协议文件
-注：thrift接口的返回值必须是结构体，并且必须有一个类型为TResponseStatusStruct名称为responseStatusStruct的属性。
+thrift协议文件
+注：thrift接口的返回值必须是结构体，并且必须有一个类型为TResponseStatus名称为responseStatus的属性。
 
 作用：
      管理thrift协议文件，使用maven thrift 插件打包jar，给依赖者使用
