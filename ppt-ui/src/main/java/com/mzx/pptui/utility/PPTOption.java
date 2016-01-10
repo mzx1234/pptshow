@@ -24,7 +24,8 @@ public class PPTOption {
         GlobalApplication globalApplication = (GlobalApplication) Main.getBean("globalApplication");
         globalApplication.setPath(path);
         globalApplication.setCur(0);
-        ParsePPTThriftClient parsePPTThriftClient = (ParsePPTThriftClient) Main.getBean("parsePPTThriftClient");
+        ParsePPTThriftClient parsePPTThriftClient = (ParsePPTThriftClient)
+                Main.getBean("parsePPTThriftClient");
         PPTBytes bytes = parsePPTThriftClient.task();
         globalApplication.setLen(bytes.getPptDetail().getLen());
 //        return SerializeUtil.unserializeImg(bytes.getBytes());
@@ -38,11 +39,13 @@ public class PPTOption {
      */
     public static byte[] swichPage(int cur)  {
         GlobalApplication globalApplication = (GlobalApplication) Main.getBean("globalApplication");
-        if(cur == globalApplication.getLen() || cur < 0) {
+        if(cur == globalApplication.getLen() || cur < 0 ||
+                cur == globalApplication.getCur()) {
             return null;
         }
         globalApplication.setCur(cur);
-        OptionPPTThriftClient optionPPTThriftClient = (OptionPPTThriftClient) Main.getBean("optionPPTThriftClient");
+        OptionPPTThriftClient optionPPTThriftClient = (OptionPPTThriftClient)
+                Main.getBean("optionPPTThriftClient");
         byte[] bytes = optionPPTThriftClient.task().getBytes();
         return bytes;
     }

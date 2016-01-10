@@ -39,6 +39,8 @@ public class ParsePPTThriftClient<Stirng> extends BaseThriftClient<String>{
             transport.open();
             PPTDetail detail = new PPTDetail();
             detail.setPath(parm);
+            detail.setCurPage(globalApplication.getCur());
+            detail.setLen(globalApplication.getLen());
             return parseClient.parsePPTAndGetFirst(detail);
         }catch (Exception e) {
             logger.info(e.getMessage());

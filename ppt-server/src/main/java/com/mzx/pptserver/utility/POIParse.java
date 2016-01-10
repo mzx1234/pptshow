@@ -187,7 +187,7 @@ public class POIParse {
         globalApplication.setPath(file);
         globalApplication.setFileName(file);
         globalApplication.setCurPage(0);
-        globalApplication.setKey(globalApplication.getFileName());
+        globalApplication.setKey(file);
         globalApplication.setLen(len);
     }
 

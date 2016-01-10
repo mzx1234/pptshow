@@ -56,8 +56,8 @@ public class GlobalApplication {
         return key;
     }
 
-    public void setKey(String key) {
-        this.key = key;
+    public void setKey(String path) {
+        this.key = (new File(path)).getName();
     }
 
     public String getFiled() {

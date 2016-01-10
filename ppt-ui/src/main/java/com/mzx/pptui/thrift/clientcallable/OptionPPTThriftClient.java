@@ -4,7 +4,9 @@ import com.mzx.pptprocotol.thrift.service.TOptionService;
 import com.mzx.pptprocotol.thrift.service.TParsePPTService;
 import com.mzx.pptprocotol.thrift.struct.PPTBytes;
 import com.mzx.pptprocotol.thrift.struct.PPTDetail;
+import com.mzx.pptui.application.GlobalApplication;
 import com.mzx.pptui.constant.TaskTypeConstant.TaskType;
+import com.mzx.pptui.main.Main;
 import org.apache.thrift.protocol.TBinaryProtocol;
 import org.apache.thrift.protocol.TMultiplexedProtocol;
 import org.apache.thrift.protocol.TProtocol;
@@ -21,8 +23,10 @@ import java.util.concurrent.Future;
  */
 @Service
 public class OptionPPTThriftClient extends BaseThriftClient<Integer>{
+
     @Override
     PPTBytes getByte(Integer parm) throws Exception {
+
         TTransport transport = null;
         transport = new TSocket(thriftConnectParm.getIp(), thriftConnectParm.getPort(), thriftConnectParm.getTimeOut());
         TProtocol protocol = new TBinaryProtocol(transport);
@@ -34,6 +38,8 @@ public class OptionPPTThriftClient extends BaseThriftClient<Integer>{
             transport.open();
             PPTDetail detail = new PPTDetail();
             detail.setCurPage(parm);
+            detail.setPath(globalApplication.getPath());
+            detail.setLen(globalApplication.getLen());
             return optionClient.swichPPTPage(detail);
         }catch (Exception e) {
             logger.info(e.getMessage());

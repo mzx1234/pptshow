@@ -16,9 +16,21 @@ const string RES_SUCCESS_CODE = "00000";
         4:i32 len;
     }
 
-    struct PPTBytes {
-        #当前页
-        1:PPTDetail pptDetail;
-        #内容二进制流
-        2:binary bytes;
+
+    #相应体通用结构
+    struct ResponseStatus {
+        # 响应码 ，00000表示成功，默认值成功
+        1: string code = RES_SUCCESS_CODE;
+        # 错误时，错误描述信息
+        2: string msg = "";
     }
+
+    struct PPTBytes {
+        #回复状态
+        1:ResponseStatus resopnseStatus;
+        #当前页
+        2:PPTDetail pptDetail;
+        #内容二进制流
+        3:binary bytes;
+    }
+
