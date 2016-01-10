@@ -27,5 +27,12 @@ public class PptTypeConstant {
             return des;
         }
 
+        @Override
+        public String toString() {
+            return "PPTType{" +
+                    "pptType=" + pptType +
+                    ", des='" + des + '\'' +
+                    '}';
+        }
     }
 }

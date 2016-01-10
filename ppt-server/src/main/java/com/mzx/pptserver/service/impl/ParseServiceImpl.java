@@ -18,6 +18,9 @@ public class ParseServiceImpl implements ParseService {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
 
+    /**
+     * ppt文件解析实现类
+     */
     @Autowired
     private POIParse poiParse;
 

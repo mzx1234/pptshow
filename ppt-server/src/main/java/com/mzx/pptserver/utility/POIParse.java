@@ -19,7 +19,7 @@ import java.io.FileInputStream;
 import java.util.List;
 
 /**
- * POI解析工具类
+ * POI解析ppt文件工具类
  * Created by zison on 2015/12/31.
  */
 public class POIParse {
@@ -28,10 +28,18 @@ public class POIParse {
 
     List<HSLFSlide> pptSlideList;
     List<XSLFSlide> pptxSlideList;
+    /**
+     * ppt页面大小
+     */
     private Dimension pgsize = null;
+    /**
+     * ppt文件页数
+     */
     private int len;
 
-
+    /**
+     * ppt文件类型，包括ppt和pptx
+     */
     private PPTType pptType ;
 
     @Autowired
@@ -40,7 +48,11 @@ public class POIParse {
     private RedisUtil redisUtil;
 
 
-
+    /**
+     * 通过文件路径解析ppt文件成Slide类型
+     * @param file
+     * @throws Exception
+     */
     private  void getPPTSlides(String file) throws Exception{
         logger.info("getPPTSlides function start");
         HSLFSlideShow pptSlideShow = new HSLFSlideShow(new HSLFSlideShowImpl(file));
@@ -54,6 +66,11 @@ public class POIParse {
     }
 
 
+    /**
+     * 通过文件路径解析pptx文件成Slide类型
+     * @param file
+     * @throws Exception
+     */
     private void getPPTXSlides(String file) throws Exception{
         logger.info("getPPTXSlides function start");
         XMLSlideShow pptxSlideShow = new XMLSlideShow(new FileInputStream(file));
@@ -65,6 +82,11 @@ public class POIParse {
         logger.info("getPPTXSlides function is finish");
     }
 
+    /**
+     * 将对应的Slide转化成BufferedImage
+     * @param cur 需要转化的页码
+     * @return
+     */
     private BufferedImage getImag(int cur) {
         logger.info("getImag function start");
         BufferedImage img = new BufferedImage(pgsize.width, pgsize.height,
@@ -88,6 +110,11 @@ public class POIParse {
     }
 
 
+    /**
+     * 将解析得到的img先转化为byte数组，然后缓存到redis中散列表类型
+     * key 为文件名fileName
+     * filed 为ppt对应页码
+     */
     private void toRedis() {
         new Thread(new Runnable() {
             @Override
@@ -103,16 +130,26 @@ public class POIParse {
 
     }
 
+    /**
+     * 通过文件名（key）从缓存redis中获取filed为“0”的value
+     * @param file 文件名
+     * @return
+     */
     private byte[] getFromRedis(String file) {
         innitGlobal(file);
         return redisUtil.hGetBytes(globalApplication.getKey(), "0");
     }
 
 
-
+    /**
+     * 供服务接口调用的函数，解析ppt文件并返回首页数据
+     * @param file ppt文件路径
+     * @return
+     * @throws Exception
+     */
     public byte[] parsePPTAndGetFirst(String file) throws Exception{
-//        int pptLen =
         byte[] result = getFromRedis(file);
+        /**如果返回值不为null，则证明缓存中存在，直接返回，否则重新解析*/
         if(result != null) {
             globalApplication.setLen((redisUtil.hGetLen(globalApplication.getKey())).intValue());
             return result;
@@ -123,6 +160,12 @@ public class POIParse {
         return SerializeUtil.serializeImg(getImag(0));
     }
 
+    /**
+     * 供服务接口调用的函数，解析pptx文件并返回首页数据
+     * @param file pptx文件路径
+     * @return
+     * @throws Exception
+     */
     public byte[] parsePPTXAndGetFirst(String file) throws Exception{
         byte[] result = getFromRedis(file);
         if(result != null) {
@@ -136,6 +179,10 @@ public class POIParse {
     }
 
 
+    /**
+     * 初始化全局变量对象
+     * @param file
+     */
     private void innitGlobal(String file) {
         globalApplication.setPath(file);
         globalApplication.setFileName(file);

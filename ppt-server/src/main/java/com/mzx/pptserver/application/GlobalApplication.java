@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import java.io.File;
 
 /**
- * 全局变量
+ * ppt文件相关全局变量
  * Created by zison on 2016/1/3.
  */
 @Component
@@ -69,8 +69,15 @@ public class GlobalApplication {
     }
 
 
-
-
-
-
+    @Override
+    public String toString() {
+        return "GlobalApplication{" +
+                "path='" + path + '\'' +
+                ", fileName='" + fileName + '\'' +
+                ", curPage=" + curPage +
+                ", key='" + key + '\'' +
+                ", filed='" + filed + '\'' +
+                ", len=" + len +
+                '}';
+    }
 }

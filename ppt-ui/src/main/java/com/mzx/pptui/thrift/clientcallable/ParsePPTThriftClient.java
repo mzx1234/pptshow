@@ -15,6 +15,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 /**
+ * ppt文件解析客户端实现类
  * Created by zison on 2016/1/9.
  */
 @Service

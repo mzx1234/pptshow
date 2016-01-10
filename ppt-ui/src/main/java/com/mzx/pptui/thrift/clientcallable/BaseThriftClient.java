@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.concurrent.Callable;
 
 /**
+ * thrift客户端基类
  * Created by zison on 2016/1/9.
  */
  abstract class BaseThriftClient<T> implements Callable<PPTBytes> {

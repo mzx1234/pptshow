@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- *
+ * PPT操作相关服务Thrift接口实现类
  * Created by zison on 2016/1/7.
  */
 @Service

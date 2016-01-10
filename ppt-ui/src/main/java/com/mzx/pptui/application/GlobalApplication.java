@@ -3,6 +3,7 @@ package com.mzx.pptui.application;
 import org.springframework.stereotype.Component;
 
 /**
+ * ppt文件相关全局变量
  * Created by zison on 2016/1/9.
  */
 @Component
@@ -39,5 +40,12 @@ public class GlobalApplication {
 
     private int len;
 
-
+    @Override
+    public String toString() {
+        return "GlobalApplication{" +
+                "path='" + path + '\'' +
+                ", cur=" + cur +
+                ", len=" + len +
+                '}';
+    }
 }

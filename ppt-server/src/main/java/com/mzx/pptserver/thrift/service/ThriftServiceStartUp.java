@@ -13,7 +13,7 @@ import java.net.InetSocketAddress;
 import java.util.Map;
 
 /**
- *
+ * Thrift接口服务启动类
  * Created by zison on 2016/1/7.
  */
 public class ThriftServiceStartUp extends BaseThriftService  {
@@ -24,6 +24,9 @@ public class ThriftServiceStartUp extends BaseThriftService  {
 
     private int port;
 
+    /**
+     * 存储thrift接口服务对象
+     */
     private Map<String, TProcessor> serverMap;
 
 

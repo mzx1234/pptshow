@@ -18,5 +18,11 @@ public interface ParseService {
     byte[] parsePPTFile(String file) throws ServiceException;
 
 
+    /**
+     * 解析对应的PPTX文件
+     * @param file 文件路径
+     * @return
+     * @throws ServiceException
+     */
     byte[] parsePPTXFile(String file) throws ServiceException;
 }

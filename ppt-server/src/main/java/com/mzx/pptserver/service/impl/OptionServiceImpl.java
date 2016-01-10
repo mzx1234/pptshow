@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
+ * ppt相关操作服务实现类
  * Created by zison on 2015/12/31.
  */
 @Service
@@ -20,7 +21,6 @@ public class OptionServiceImpl implements OptionService {
     private GlobalApplication globalApplication;
 
     @Override
-
     public byte[] swichPPTPage(int cur) {
         byte[] result = redisUtil.hGetBytes(globalApplication.getKey(), cur+"");
         if(result == null) {

@@ -15,6 +15,7 @@ import java.io.File;
 
 
 /**
+ * 解析ppt文件服务Thrift接口实现类
  * Created by zison on 2016/1/7.
  */
 @Service

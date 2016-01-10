@@ -1,6 +1,7 @@
 package com.mzx.pptui.bean;
 
 /**
+ * 连接Thrift服务端参数
  * Created by zison on 2016/1/9.
  */
 public class ThriftConnectParm {
@@ -52,4 +53,14 @@ public class ThriftConnectParm {
     private String optionPPTServiceName;
 
 
+    @Override
+    public String toString() {
+        return "ThriftConnectParm{" +
+                "ip='" + ip + '\'' +
+                ", port=" + port +
+                ", timeOut=" + timeOut +
+                ", parsePPTServiceName='" + parsePPTServiceName + '\'' +
+                ", optionPPTServiceName='" + optionPPTServiceName + '\'' +
+                '}';
+    }
 }

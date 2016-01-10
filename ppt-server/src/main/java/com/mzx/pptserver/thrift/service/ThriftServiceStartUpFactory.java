@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
+ * thrift接口启动工厂
  * Created by zison on 2016/1/8.
  */
 @Service

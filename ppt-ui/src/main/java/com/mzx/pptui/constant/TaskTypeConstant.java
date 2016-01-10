@@ -28,6 +28,12 @@ public class TaskTypeConstant {
             this.des = des;
         }
 
-
+        @Override
+        public String toString() {
+            return "TaskType{" +
+                    "taskType=" + taskType +
+                    ", des='" + des + '\'' +
+                    '}';
+        }
     }
 }

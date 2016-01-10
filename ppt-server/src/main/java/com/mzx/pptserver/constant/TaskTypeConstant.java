@@ -29,5 +29,12 @@ public class TaskTypeConstant {
         }
 
 
+        @Override
+        public String toString() {
+            return "TaskType{" +
+                    "taskType=" + taskType +
+                    ", des='" + des + '\'' +
+                    '}';
+        }
     }
 }
