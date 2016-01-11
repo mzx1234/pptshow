@@ -1,7 +1,7 @@
 package com.mzx.pptserver.service.impl;
 
 
-import com.mzx.pptserver.exception.ServiceException;
+import com.mzx.pptcommon.exception.ServiceException;
 import com.mzx.pptserver.service.ParseService;
 import com.mzx.pptserver.utility.POIParse;
 import org.slf4j.Logger;

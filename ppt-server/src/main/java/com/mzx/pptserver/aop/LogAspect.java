@@ -3,6 +3,7 @@ package com.mzx.pptserver.aop;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Aspect
+@Order(1)
 public class LogAspect extends BaseAspect{
 
 
@@ -28,9 +30,10 @@ public class LogAspect extends BaseAspect{
         }
         //方法结束时间
         long over = System.currentTimeMillis();
-        logger.info(String.format("%s Over## Finished after: %sms. Args: %s. Result: %s ",
-                getLogHeader(joinPoint), (over - start), argsJson, result.toString()));
+        logger.info(String.format("%s Over## Finished after: %sms. Args: %s",
+                getLogHeader(joinPoint), (over - start), argsJson));
 
         return result;
     }
+
 }

@@ -56,6 +56,10 @@ public class ParsePPTThriftClient<Stirng> extends BaseThriftClient<String>{
         try {
 //            return future.get();
             PPTBytes bytes = future.get();
+            if(bytes == null) {
+                logger.error("·µ»ØÖµÎªnull");
+                return bytes;
+            }
             logger.info(bytes.getBytes().length+"");
             return bytes;
         } catch (InterruptedException e) {

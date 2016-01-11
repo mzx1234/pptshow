@@ -1,7 +1,7 @@
 package com.mzx.pptserver.service;
 
 
-import com.mzx.pptserver.exception.ServiceException;
+import com.mzx.pptcommon.exception.ServiceException;
 
 /**
  * 解析PPT文件服务
