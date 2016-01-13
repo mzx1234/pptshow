@@ -1,7 +1,7 @@
 package com.mzx.pptserver.aop;
 
 import com.mzx.pptcommon.constant.SystemConstant;
-import com.mzx.pptcommon.exception.ServiceException;
+import com.mzx.pptcommon.exception.PPTshowException;
 import com.mzx.pptprocotol.thrift.struct.ResponseStatus;
 import org.apache.thrift.TException;
 import org.aspectj.lang.JoinPoint;
@@ -43,15 +43,22 @@ public class ExceptionAspect extends BaseAspect{
      */
     private Object convertExceptionToThriftResult(ProceedingJoinPoint jp, Throwable throwable) {
         Class returnType = ((MethodSignature)jp.getSignature()).getReturnType();
-        Object returnValue = returnType.getInterfaces();
+        Object returnValue = null;
+        try {
+            returnValue = returnType.newInstance();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
 
         //默认系统异常
         ResponseStatus responseStatus = new ResponseStatus();
         responseStatus.setCode(SystemConstant.ResponseStatusCode.ABNORMAL.getCode());
         responseStatus.setMsg(SystemConstant.ResponseStatusCode.ABNORMAL.getDescription());
-        if(throwable instanceof ServiceException) {
-            responseStatus.setCode(((ServiceException)throwable).getErrorCode());
-            responseStatus.setMsg(((ServiceException)throwable).getMsg());
+        if(throwable instanceof PPTshowException) {
+            responseStatus.setCode(((PPTshowException)throwable).getErrorCode());
+            responseStatus.setMsg(((PPTshowException)throwable).getMsg());
         }
 
         logger.info(responseStatus.toString());

@@ -1,5 +1,6 @@
 package com.mzx.pptui.thrift.clientcallable;
 
+import com.mzx.pptcommon.constant.SystemConstant;
 import com.mzx.pptprocotol.thrift.service.TOptionService;
 import com.mzx.pptprocotol.thrift.service.TParsePPTService;
 import com.mzx.pptprocotol.thrift.struct.PPTBytes;
@@ -58,8 +59,14 @@ public class OptionPPTThriftClient extends BaseThriftClient<Integer>{
         Future<PPTBytes> future = executorManager.getThreadPoolExecutor(TaskType.PPT_OPTION).submit(this);
         try {
             PPTBytes bytes = future.get();
-            logger.info(bytes.getBytes().length+"");
-            return bytes;
+            if(bytes.getResponseStatus().getCode().equals(
+                    SystemConstant.ResponseStatusCode.NORMAL.getCode())) {
+                logger.info(bytes.getBytes().length + "");
+                return bytes;
+            }
+            else {
+                logger.error(bytes.getResponseStatus().getMsg());
+            }
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {

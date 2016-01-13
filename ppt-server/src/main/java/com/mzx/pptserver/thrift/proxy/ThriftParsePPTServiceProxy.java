@@ -1,9 +1,12 @@
 package com.mzx.pptserver.thrift.proxy;
 
 
+import com.mzx.pptcommon.constant.SystemConstant;
+import com.mzx.pptcommon.exception.PPTshowException;
 import com.mzx.pptprocotol.thrift.service.TParsePPTService;
 import com.mzx.pptprocotol.thrift.struct.PPTBytes;
 import com.mzx.pptprocotol.thrift.struct.PPTDetail;
+import com.mzx.pptprocotol.thrift.struct.ResponseStatus;
 import com.mzx.pptserver.application.GlobalApplication;
 import com.mzx.pptserver.constant.PptTypeConstant.PPTType;
 import com.mzx.pptserver.service.ParseService;
@@ -37,8 +40,10 @@ public class ThriftParsePPTServiceProxy implements TParsePPTService.Iface{
             case PPTX:
                 bytes = parseService.parsePPTXFile(path);
                 break;
-            default: bytes = null;
-
+            default:
+                bytes = null;
+                throw new PPTshowException(SystemConstant.ResponseStatusCode.ABNORMAL.getCode(),
+                        "你选择的不是ppt文件");
         }
 
         PPTBytes pptBytes = new PPTBytes();
@@ -50,6 +55,9 @@ public class ThriftParsePPTServiceProxy implements TParsePPTService.Iface{
         pptBytes.pptDetail = pptDetail;
         pptBytes.setBytes(bytes);
 
+        ResponseStatus responseStatus = new ResponseStatus();
+        pptBytes.setResponseStatus(responseStatus);
+
         return pptBytes;
     }
 
@@ -60,6 +68,6 @@ public class ThriftParsePPTServiceProxy implements TParsePPTService.Iface{
         else if(fileName.endsWith("pptx"))
             return PPTType.PPTX;
         else
-            return null;
+            return PPTType.NOTPPT;
     }
 }

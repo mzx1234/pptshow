@@ -27,7 +27,7 @@ const string RES_SUCCESS_CODE = "00000";
 
     struct PPTBytes {
         #回复状态
-        1:ResponseStatus resopnseStatus;
+        1:ResponseStatus responseStatus;
         #当前页
         2:PPTDetail pptDetail;
         #内容二进制流

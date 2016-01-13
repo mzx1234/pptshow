@@ -1,7 +1,7 @@
 package com.mzx.pptserver.service;
 
 
-import com.mzx.pptcommon.exception.ServiceException;
+import com.mzx.pptcommon.exception.PPTshowException;
 
 /**
  * 解析PPT文件服务
@@ -13,16 +13,16 @@ public interface ParseService {
     /**
      * 解析对应的PPT文件
      * @param file 文件路径
-     * @throws ServiceException
+     * @throws PPTshowException
      */
-    byte[] parsePPTFile(String file) throws ServiceException;
+    byte[] parsePPTFile(String file) throws PPTshowException;
 
 
     /**
      * 解析对应的PPTX文件
      * @param file 文件路径
      * @return
-     * @throws ServiceException
+     * @throws PPTshowException
      */
-    byte[] parsePPTXFile(String file) throws ServiceException;
+    byte[] parsePPTXFile(String file) throws PPTshowException;
 }

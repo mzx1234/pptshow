@@ -12,5 +12,5 @@ public interface OptionService {
      * ppt页面切换
      * @param cur 切换页数
      */
-    public byte[] swichPPTPage(int cur);
+    public byte[] swichPPTPage(int cur) ;
 }

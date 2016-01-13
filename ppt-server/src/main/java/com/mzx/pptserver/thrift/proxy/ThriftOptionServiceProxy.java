@@ -5,6 +5,7 @@ package com.mzx.pptserver.thrift.proxy;
 import com.mzx.pptprocotol.thrift.service.TOptionService;
 import com.mzx.pptprocotol.thrift.struct.PPTBytes;
 import com.mzx.pptprocotol.thrift.struct.PPTDetail;
+import com.mzx.pptprocotol.thrift.struct.ResponseStatus;
 import com.mzx.pptserver.application.GlobalApplication;
 import com.mzx.pptserver.service.OptionService;
 import org.apache.thrift.TException;
@@ -31,6 +32,9 @@ public class ThriftOptionServiceProxy implements TOptionService.Iface {
         PPTBytes pptBytes = new PPTBytes();
         pptBytes.setBytes(bytes);
         pptBytes.setPptDetail(parm);
+
+        ResponseStatus responseStatus = new ResponseStatus();
+        pptBytes.setResponseStatus(responseStatus);
         return pptBytes;
     }
 

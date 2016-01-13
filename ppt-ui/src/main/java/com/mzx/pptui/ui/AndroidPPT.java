@@ -1,5 +1,6 @@
 package com.mzx.pptui.ui;
 
+import com.mzx.pptcommon.exception.PPTshowException;
 import com.mzx.pptui.application.GlobalApplication;
 import com.mzx.pptui.main.Main;
 import com.mzx.pptui.utility.PPTOption;
@@ -211,7 +212,7 @@ public class AndroidPPT extends JFrame {
             }
         });
 
-        _exit.addActionListener(new ActionListener(){    //按了这个按钮之后会退出
+        _exit.addActionListener(new ActionListener() {    //按了这个按钮之后会退出
             public void actionPerformed(ActionEvent e) {
                 System.exit(0);
             }
@@ -221,8 +222,7 @@ public class AndroidPPT extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 getPath();
                 _currentPage = 0;
-                ImageIcon ico = new ImageIcon(PPTOption.load(_Path));
-                _label.setIcon(ico);
+                showPPT(_Path);
             }
 
         });
@@ -267,9 +267,34 @@ public class AndroidPPT extends JFrame {
     /**
      * show PPT
      */
-    protected void showPPT() {
+    protected void showPPT(String path) {
 
+        byte[] bytes = null;
+        try {
+            bytes = PPTOption.load(path);
+        }catch (Exception ex) {
+            if(ex instanceof PPTshowException) {
+                return;
+            }
+        }
+        ImageIcon ico = new ImageIcon(bytes);
+        _label.setIcon(ico);
 
+    }
+
+    private void showPPT(int cur) {
+
+        byte[] bytes = null;
+        try {
+            bytes = PPTOption.swichPage(++_currentPage);
+        }catch (Exception ex) {
+            if(ex instanceof PPTshowException) {
+                _label.setText("出错啦!");
+            }
+        }
+        if(bytes != null) {
+
+        }
 
     }
 

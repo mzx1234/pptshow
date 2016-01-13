@@ -1,5 +1,7 @@
 package com.mzx.pptserver.utility;
 
+import com.mzx.pptcommon.constant.SystemConstant;
+import com.mzx.pptcommon.exception.PPTshowException;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.slf4j.Logger;
@@ -579,6 +581,7 @@ public class RedisUtil {
 		} catch (Exception ex) {
 			log.info("connect to redis fail");
 			returnBrokenRedisConn(conn);
+			throw new PPTshowException(SystemConstant.ResponseStatusCode.ABNORMAL.getCode(),"redis 连接失败");
 		} finally {
 			returnRedisConn(conn);
 		}
@@ -619,6 +622,8 @@ public class RedisUtil {
 			result = conn.hget(key.getBytes(), field.getBytes());
 		} catch (Exception ex) {
 			returnBrokenRedisConn(conn);
+			log.error("redis 连接失败");
+			throw new PPTshowException(SystemConstant.ResponseStatusCode.ABNORMAL.getCode(),"redis 连接失败");
 		} finally {
 			returnRedisConn(conn);
 		}
@@ -637,7 +642,9 @@ public class RedisUtil {
 			conn = getRedisConn();
 			result = conn.hlen(key.getBytes());
 		} catch (Exception ex) {
+			log.error("redis 连接失败");
 			returnBrokenRedisConn(conn);
+			throw new PPTshowException(SystemConstant.ResponseStatusCode.ABNORMAL.getCode(),"redis 连接失败");
 		} finally {
 			returnRedisConn(conn);
 		}

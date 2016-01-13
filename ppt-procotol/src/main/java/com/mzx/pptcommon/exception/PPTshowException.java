@@ -3,7 +3,7 @@ package com.mzx.pptcommon.exception;
 /**
  * Created by zison on 2015/12/30.
  */
-public class ServiceException extends RuntimeException {
+public class PPTshowException extends RuntimeException {
 
     public String getErrorCode() {
         return errorCode;
@@ -23,5 +23,12 @@ public class ServiceException extends RuntimeException {
 
     private String errorCode;
     private String msg;
+
+    public PPTshowException(String errorCode, String msg) {
+        super(msg);
+        this.errorCode = errorCode;
+        this.msg = msg;
+    }
+
 
 }

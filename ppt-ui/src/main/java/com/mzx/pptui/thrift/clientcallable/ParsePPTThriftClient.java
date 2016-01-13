@@ -1,5 +1,7 @@
 package com.mzx.pptui.thrift.clientcallable;
 
+import com.mzx.pptcommon.constant.SystemConstant;
+import com.mzx.pptcommon.exception.PPTshowException;
 import com.mzx.pptprocotol.thrift.service.TParsePPTService;
 import com.mzx.pptprocotol.thrift.struct.PPTBytes;
 import com.mzx.pptprocotol.thrift.struct.PPTDetail;
@@ -56,12 +58,15 @@ public class ParsePPTThriftClient<Stirng> extends BaseThriftClient<String>{
         try {
 //            return future.get();
             PPTBytes bytes = future.get();
-            if(bytes == null) {
-                logger.error("·µ»ØÖµÎªnull");
+            if(bytes.getResponseStatus().getCode().equals(
+                    SystemConstant.ResponseStatusCode.NORMAL.getCode())) {
+                logger.info(bytes.getBytes().length + "");
                 return bytes;
             }
-            logger.info(bytes.getBytes().length+"");
-            return bytes;
+            else {
+                logger.error(bytes.getResponseStatus().getMsg());
+                throw new PPTshowException(bytes.getResponseStatus().getCode(),bytes.getResponseStatus().getMsg());
+            }
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {

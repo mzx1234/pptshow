@@ -1,7 +1,8 @@
 package com.mzx.pptserver.service.impl;
 
 
-import com.mzx.pptcommon.exception.ServiceException;
+import com.mzx.pptcommon.constant.SystemConstant.ResponseStatusCode;
+import com.mzx.pptcommon.exception.PPTshowException;
 import com.mzx.pptserver.application.GlobalApplication;
 import com.mzx.pptserver.service.OptionService;
 import com.mzx.pptserver.utility.RedisUtil;
@@ -21,10 +22,10 @@ public class OptionServiceImpl implements OptionService {
     private GlobalApplication globalApplication;
 
     @Override
-    public byte[] swichPPTPage(int cur) {
+    public byte[] swichPPTPage(int cur) throws PPTshowException {
         byte[] result = redisUtil.hGetBytes(globalApplication.getKey(), cur+"");
         if(result == null) {
-            throw new ServiceException();
+            throw new PPTshowException(ResponseStatusCode.ABNORMAL.getCode(), "你所要求的页面缓存中不存在，请重新加载");
         }
         return result;
     }

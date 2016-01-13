@@ -8,7 +8,8 @@ public class PptTypeConstant {
 
     public enum PPTType {
         PPTX(1,"PPTX 文件"),
-        PPT(2, "PPT 文件");
+        PPT(2, "PPT 文件"),
+        NOTPPT(3, "非PPT文件");
 
         int pptType;
         String des;

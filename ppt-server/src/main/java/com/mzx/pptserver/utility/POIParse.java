@@ -2,6 +2,8 @@ package com.mzx.pptserver.utility;
 
 
 
+import com.mzx.pptcommon.constant.SystemConstant;
+import com.mzx.pptcommon.exception.PPTshowException;
 import com.mzx.pptserver.application.GlobalApplication;
 import com.mzx.pptserver.constant.PptTypeConstant.PPTType;
 import org.apache.poi.hslf.usermodel.HSLFSlide;
@@ -16,6 +18,7 @@ import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -53,9 +56,17 @@ public class POIParse {
      * @param file
      * @throws Exception
      */
-    private  void getPPTSlides(String file) throws Exception{
+    private  void getPPTSlides(String file) {
         logger.info("getPPTSlides function start");
-        HSLFSlideShow pptSlideShow = new HSLFSlideShow(new HSLFSlideShowImpl(file));
+        HSLFSlideShow pptSlideShow = null;
+        try {
+            pptSlideShow = new HSLFSlideShow(new HSLFSlideShowImpl(file));
+        } catch (IOException e) {
+            e.printStackTrace();
+            logger.error("文件不存在或者文件不是.ppt文件");
+            throw new PPTshowException(SystemConstant.ResponseStatusCode.ABNORMAL.getCode(),
+                    "文件不存在或者文件不是ppt文件");
+        }
         pgsize = pptSlideShow.getPageSize();
         pptSlideList = pptSlideShow.getSlides();
         pptType = PPTType.PPT;
@@ -71,9 +82,17 @@ public class POIParse {
      * @param file
      * @throws Exception
      */
-    private void getPPTXSlides(String file) throws Exception{
+    private void getPPTXSlides(String file) {
         logger.info("getPPTXSlides function start");
-        XMLSlideShow pptxSlideShow = new XMLSlideShow(new FileInputStream(file));
+        XMLSlideShow pptxSlideShow = null;
+        try {
+            pptxSlideShow = new XMLSlideShow(new FileInputStream(file));
+        } catch (IOException e) {
+            e.printStackTrace();
+            logger.error("文件不存在或者文件不是pptx文件");
+            throw new PPTshowException(SystemConstant.ResponseStatusCode.ABNORMAL.getCode(),
+                    "文件不存在或者文件不是.pptx文件");
+        }
         pgsize = pptxSlideShow.getPageSize();
         pptxSlideList = pptxSlideShow.getSlides();
         pptType = PPTType.PPTX;
@@ -104,6 +123,10 @@ public class POIParse {
             case PPTX:
                 pptxSlideList.get(cur).draw(jpgGraphics);
                 break;
+            default:
+                logger.error("你选择的不是ppt文件");
+                throw new PPTshowException(SystemConstant.ResponseStatusCode.ABNORMAL.getCode(),
+                        "你选择的不是ppt文件");
         }
         logger.info("getImag function finish");
         return img;
@@ -115,7 +138,7 @@ public class POIParse {
      * key 为文件名fileName
      * filed 为ppt对应页码
      */
-    private void toRedis() {
+    private void toRedis() throws PPTshowException {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -135,7 +158,7 @@ public class POIParse {
      * @param file 文件名
      * @return
      */
-    private byte[] getFromRedis(String file) {
+    private byte[] getFromRedis(String file) throws PPTshowException {
         innitGlobal(file);
         return redisUtil.hGetBytes(globalApplication.getKey(), "0");
     }
@@ -147,7 +170,7 @@ public class POIParse {
      * @return
      * @throws Exception
      */
-    public byte[] parsePPTAndGetFirst(String file) throws Exception{
+    public byte[] parsePPTAndGetFirst(String file) throws PPTshowException {
         byte[] result = getFromRedis(file);
         /**如果返回值不为null，则证明缓存中存在，直接返回，否则重新解析*/
         if(result != null) {
@@ -166,7 +189,7 @@ public class POIParse {
      * @return
      * @throws Exception
      */
-    public byte[] parsePPTXAndGetFirst(String file) throws Exception{
+    public byte[] parsePPTXAndGetFirst(String file) throws PPTshowException {
         byte[] result = getFromRedis(file);
         if(result != null) {
             globalApplication.setLen((redisUtil.hGetLen(globalApplication.getKey())).intValue());

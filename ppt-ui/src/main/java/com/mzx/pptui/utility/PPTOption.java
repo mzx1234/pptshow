@@ -1,5 +1,6 @@
 package com.mzx.pptui.utility;
 
+import com.mzx.pptcommon.exception.PPTshowException;
 import com.mzx.pptprocotol.thrift.struct.PPTBytes;
 import com.mzx.pptui.application.GlobalApplication;
 import com.mzx.pptui.main.Main;
@@ -20,15 +21,14 @@ public class PPTOption {
      * @param path pptÎÄ¼þÂ·¾¶
      * @return
      */
-    public static byte[] load(String path) {
+    public static byte[] load(String path) throws PPTshowException{
         GlobalApplication globalApplication = (GlobalApplication) Main.getBean("globalApplication");
         globalApplication.setPath(path);
         globalApplication.setCur(0);
         ParsePPTThriftClient parsePPTThriftClient = (ParsePPTThriftClient)
-                Main.getBean("parsePPTThriftClient");
+                    Main.getBean("parsePPTThriftClient");
         PPTBytes bytes = parsePPTThriftClient.task();
         globalApplication.setLen(bytes.getPptDetail().getLen());
-//        return SerializeUtil.unserializeImg(bytes.getBytes());
         return bytes.getBytes();
     }
 
