@@ -3,6 +3,7 @@ package com.mzx.pptui.ui;
 import com.mzx.pptcommon.exception.PPTshowException;
 import com.mzx.pptui.application.GlobalApplication;
 import com.mzx.pptui.main.Main;
+import com.mzx.pptui.utility.NetWorkOption;
 import com.mzx.pptui.utility.PPTOption;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +17,7 @@ public class AndroidPPT extends JFrame {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
 
-    protected MyButton _pre, _next, _big, _small, _load, _first, _last, _broadcastIP, _exit;
+    protected MyButton2 _pre, _next, _big, _small, _load, _first, _last, _broadcastIP, _exit;
     JLabel _label;
 
     protected JPanel _p1, _p2, _p3;
@@ -27,9 +28,6 @@ public class AndroidPPT extends JFrame {
     public String _fileName;
 
     private String _ipString;
-    private String _subnetString;
-    private String _broadcastAddress;
-    String _sub = "255.255.255.0";
 
     //用来显示初始界面的图片
     public boolean flag = false; //用来控制是否要隐藏按钮，false代表不隐藏
@@ -56,16 +54,16 @@ public class AndroidPPT extends JFrame {
 
     protected void layoutFrame() {
         this.setSize(850, 550);
-        _broadcastIP = new MyButton("broadcast");
+        _broadcastIP = new MyButton2("broadcast");
         // broadcastIP = new JComboBox();
-        _load = new MyButton("load");
-        _big = new MyButton("big");
-        _small = new MyButton("small");
-        _pre = new MyButton("Prior");
-        _next = new MyButton("Next");
-        _first = new MyButton("First");
-        _last = new MyButton("Last");
-        _exit = new MyButton("Exit");
+        _load = new MyButton2("load");
+        _big = new MyButton2("big");
+        _small = new MyButton2("small");
+        _pre = new MyButton2("Prior");
+        _next = new MyButton2("Next");
+        _first = new MyButton2("First");
+        _last = new MyButton2("Last");
+        _exit = new MyButton2("Exit");
 
         _p1 = new JPanel();
 
@@ -155,8 +153,8 @@ public class AndroidPPT extends JFrame {
         d.setVisible(true);
         String s = d.getDirectory();
         _fileName = d.getFile();
-        System.out.println("1111111" + _fileName);
-        System.out.println(s + _fileName);
+        logger.info("fileName: " + _fileName);
+        logger.info(s + _fileName);
         _Path = s + _fileName;
     }
 
@@ -242,6 +240,13 @@ public class AndroidPPT extends JFrame {
         _broadcastIP.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 
+                IPDialog dialog = new IPDialog(AndroidPPT.this, "获取IP", true);
+
+                if ((_ipString = dialog.getIp()) == null) {
+                    return;
+                }
+
+                NetWorkOption.broadcastIP(_ipString);
             }
         });
 
@@ -272,7 +277,7 @@ public class AndroidPPT extends JFrame {
         byte[] bytes = null;
         try {
             bytes = PPTOption.load(path);
-        }catch (Exception ex) {
+        } catch (Exception ex) {
             if(ex instanceof PPTshowException) {
                 return;
             }
@@ -282,21 +287,6 @@ public class AndroidPPT extends JFrame {
 
     }
 
-    private void showPPT(int cur) {
-
-        byte[] bytes = null;
-        try {
-            bytes = PPTOption.swichPage(++_currentPage);
-        }catch (Exception ex) {
-            if(ex instanceof PPTshowException) {
-                _label.setText("出错啦!");
-            }
-        }
-        if(bytes != null) {
-
-        }
-
-    }
 
 }
 

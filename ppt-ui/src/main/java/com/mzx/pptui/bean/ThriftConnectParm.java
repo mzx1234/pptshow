@@ -46,11 +46,20 @@ public class ThriftConnectParm {
     }
 
 
+    public String getBroadcastIPServiceName() {
+        return broadcastIPServiceName;
+    }
+
+    public void setBroadcastIPServiceName(String broadcastIPServiceName) {
+        this.broadcastIPServiceName = broadcastIPServiceName;
+    }
+
     private String ip;
     private int port;
     private int timeOut;
     private String parsePPTServiceName;
     private String optionPPTServiceName;
+    private String broadcastIPServiceName;
 
 
     @Override
@@ -61,6 +70,7 @@ public class ThriftConnectParm {
                 ", timeOut=" + timeOut +
                 ", parsePPTServiceName='" + parsePPTServiceName + '\'' +
                 ", optionPPTServiceName='" + optionPPTServiceName + '\'' +
+                ", broadcastIPServiceName='" + broadcastIPServiceName + '\'' +
                 '}';
     }
 }

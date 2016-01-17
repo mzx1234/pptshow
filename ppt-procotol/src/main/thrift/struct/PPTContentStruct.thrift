@@ -16,6 +16,13 @@ const string RES_SUCCESS_CODE = "00000";
         4:i32 len;
     }
 
+    struct IPDetail {
+        #ip地址
+        1:string ip;
+        #广播ip地址
+        2:string broadcastIP;
+    }
+
 
     #相应体通用结构
     struct ResponseStatus {

@@ -11,6 +11,10 @@
               <constructor-arg name="iface" ref="thriftOptionServiceProxy"/>
        </bean>
 
+       <bean id="broadcastIPServiceProcessor" class="com.mzx.pptserver.thrift.service.processor.BroadcastIPServiceProcessor">
+              <constructor-arg name="iface" ref="thriftBroadcastIPServiceproxy"/>
+       </bean>
+
        <bean id="serviceStartUp" class="com.mzx.pptserver.thrift.service.ThriftServiceStartUp">
              <property name="ip" value="${thrift.ip}"/>
               <property name="port" value="${thrift.port}"/>
@@ -18,6 +22,7 @@
                      <map>
                             <entry key="${thrift.serviceName.parsePPTService}" value-ref="parserPPTServiceProcessor"/>
                             <entry key="${thrift.serviceName.optionPPTService}" value-ref="optionPPTServiceProcessor"/>
+                            <entry key="${thrift.serviceName.broadcastIPService}" value-ref="broadcastIPServiceProcessor"/>
                      </map>
               </property>
        </bean>

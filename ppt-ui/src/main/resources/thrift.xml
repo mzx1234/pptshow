@@ -9,5 +9,6 @@
               <property name="timeOut" value="${thrift.timeout}"/>
               <property name="parsePPTServiceName" value="${thrift.parsePPTServiceName}"/>
               <property name="optionPPTServiceName" value="${thrift.optionPPTSeriveName}"/>
+              <property name="broadcastIPServiceName" value="${thrift.broadcastIPServiceName}"/>
        </bean>
 </beans>

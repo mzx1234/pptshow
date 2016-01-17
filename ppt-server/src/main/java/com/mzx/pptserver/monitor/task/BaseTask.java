@@ -7,10 +7,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.concurrent.Callable;
+
 /**
  * Created by zison on 2016/1/2.
  */
-public abstract class BaseTask {
+public abstract class BaseTask implements Callable<Boolean>{
 
     protected Logger logger = LoggerFactory.getLogger(getClass());
 

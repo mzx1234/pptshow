@@ -17,7 +17,7 @@ public class SharePPTTask extends BaseTask{
 
     @Override
     public void execute() {
-        executorManager.getThreadPoolExecutor(TaskTypeConstant.TaskType.PPT_OPTION).submit(new ConcreteSharePPTTask());
+        executorManager.getThreadPoolExecutor(TaskTypeConstant.TaskType.PPT_OPTION).submit(this);
     }
 
     @Override
@@ -25,15 +25,11 @@ public class SharePPTTask extends BaseTask{
         return this.getClass().getSimpleName();
     }
 
-
-    private class ConcreteSharePPTTask implements Callable<Boolean> {
-
-        @Override
-        public Boolean call() throws Exception {
-
-            BrocastObjectUtil.brocastObject(new Object(), "广播ip");
-            return true;
-        }
+    @Override
+    public Boolean call() throws Exception {
+        return null;
     }
+
+
 }
 

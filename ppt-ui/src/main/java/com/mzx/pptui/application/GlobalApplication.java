@@ -40,6 +40,26 @@ public class GlobalApplication {
 
     private int len;
 
+    public String getIp() {
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
+
+    public String getBroadcastIP() {
+        return broadcastIP;
+    }
+
+    public void setBroadcastIP(String broadcastIP) {
+        this.broadcastIP = broadcastIP;
+    }
+
+    private String ip;
+
+    private String broadcastIP;
+
     @Override
     public String toString() {
         return "GlobalApplication{" +
