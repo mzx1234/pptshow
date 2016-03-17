@@ -26,7 +26,7 @@ import java.util.concurrent.Future;
 public class OptionPPTThriftClient extends BaseThriftClient<Integer>{
 
     @Override
-    PPTBytes getByte(Integer parm) throws Exception {
+    PPTBytes getByte(Integer parm)  {
 
         TTransport transport = null;
         transport = new TSocket(thriftConnectParm.getIp(), thriftConnectParm.getPort(), thriftConnectParm.getTimeOut());

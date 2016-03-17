@@ -2,6 +2,8 @@ package com.mzx.pptserver.service.impl;
 
 
 import com.mzx.pptcommon.exception.PPTshowException;
+import com.mzx.pptserver.application.GlobalApplication;
+import com.mzx.pptserver.monitor.task.SendMsgTask;
 import com.mzx.pptserver.service.ParseService;
 import com.mzx.pptserver.utility.POIParse;
 import org.slf4j.Logger;
@@ -23,17 +25,29 @@ public class ParseServiceImpl implements ParseService {
      */
     @Autowired
     private POIParse poiParse;
+    @Autowired
+    private SendMsgTask sendMsgTask;
+    @Autowired
+    private GlobalApplication globalApplication;
 
     @Override
     public byte[] parsePPTFile(String file) throws PPTshowException {
         logger.info("parsePPTFile function is excuted");
-        return poiParse.parsePPTAndGetFirst(file);
+        byte[] bytes =  poiParse.parsePPTAndGetFirst(file);
+
+        globalApplication.setTargetBytes(bytes);
+        sendMsgTask.execute();
+        return bytes;
     }
 
     @Override
     public byte[] parsePPTXFile(String file) throws PPTshowException {
         logger.info("parsePPTXFile function is excuted");
-        return poiParse.parsePPTXAndGetFirst(file);
+        byte[] bytes = poiParse.parsePPTXAndGetFirst(file);
+
+        globalApplication.setTargetBytes(bytes);
+        sendMsgTask.execute();
+        return bytes;
     }
 }
 

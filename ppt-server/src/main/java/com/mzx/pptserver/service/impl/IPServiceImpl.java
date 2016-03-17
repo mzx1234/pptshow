@@ -2,7 +2,9 @@ package com.mzx.pptserver.service.impl;
 
 
 import com.mzx.pptprocotol.thrift.struct.IPDetail;
+import com.mzx.pptserver.monitor.task.BroadcastIPTask;
 import com.mzx.pptserver.service.IPService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -12,9 +14,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class IPServiceImpl implements IPService {
 
+    @Autowired
+    private BroadcastIPTask broadcastIPTask;
 
     @Override
     public void broadcastIP(IPDetail ipDetail) {
-
+        broadcastIPTask.execute();
     }
 }

@@ -65,7 +65,7 @@ public class IPDialog extends JDialog implements ActionListener {
         cancle.setBounds(200, 70, 40, 20);
 
         String[] ips = getAllLocalHostIP();
-        for (int i = 0; i < ips.length / 2; i++) {
+        for (int i = 0; i < ips.length; i++) {
             comboBox.addItem(ips[i]);
         }
 

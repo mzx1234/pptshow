@@ -1,10 +1,8 @@
 package com.mzx.pptui.thrift.clientcallable;
 
 import com.mzx.pptprocotol.thrift.service.TBroadcastIPService;
-import com.mzx.pptprocotol.thrift.service.TOptionService;
 import com.mzx.pptprocotol.thrift.struct.IPDetail;
 import com.mzx.pptprocotol.thrift.struct.PPTBytes;
-import com.mzx.pptprocotol.thrift.struct.PPTDetail;
 import com.mzx.pptui.application.GlobalApplication;
 import com.mzx.pptui.bean.ThriftConnectParm;
 import com.mzx.pptui.constant.TaskTypeConstant;

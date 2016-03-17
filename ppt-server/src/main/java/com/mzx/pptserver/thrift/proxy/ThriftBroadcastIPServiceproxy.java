@@ -27,6 +27,8 @@ public class ThriftBroadcastIPServiceproxy implements TBroadcastIPService.Iface 
     @Override
     public void broadcastIP(IPDetail ipDetail) throws TException {
         logger.info(ipDetail.toString());
+        globalApplication.setIp(ipDetail.getIp());
+        globalApplication.setBroadcastIP(ipDetail.getBroadcastIP());
         ipService.broadcastIP(ipDetail);
     }
 }

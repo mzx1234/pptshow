@@ -30,6 +30,7 @@
     <import resource="poi.xml"/>
     <import resource="redis.xml"/>
     <import resource="thrift-start-up.xml"/>
+    <!--<import resource="mongodb.xml"/>-->
 
 
     <!-- mybatis 集成 -->
