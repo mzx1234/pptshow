@@ -2,6 +2,7 @@ package com.mzx.pptserver.monitor.task;
 
 
 
+import com.mzx.pptserver.application.GlobalApplication;
 import com.mzx.pptserver.monitor.ExecutorManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +19,8 @@ public abstract class BaseTask implements Callable<Boolean>{
 
     @Autowired
     protected ExecutorManager executorManager;
+    @Autowired
+    protected GlobalApplication globalApplication;
 
     /**
      * 任务实际执行的逻辑。

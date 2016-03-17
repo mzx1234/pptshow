@@ -2,10 +2,8 @@ package com.mzx.pptserver.monitor.task;
 
 
 import com.mzx.pptserver.constant.TaskTypeConstant;
-import com.mzx.pptserver.utility.BrocastObjectUtil;
 import org.springframework.stereotype.Component;
 
-import java.util.concurrent.Callable;
 
 /**
  * 同步ppt任务
