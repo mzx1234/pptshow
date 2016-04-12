@@ -6,9 +6,7 @@ import com.mzx.pptcommon.constant.SystemConstant;
 import com.mzx.pptcommon.exception.PPTshowException;
 import com.mzx.pptserver.application.GlobalApplication;
 import com.mzx.pptserver.constant.PptTypeConstant.PPTType;
-import org.apache.poi.hslf.usermodel.HSLFSlide;
-import org.apache.poi.hslf.usermodel.HSLFSlideShow;
-import org.apache.poi.hslf.usermodel.HSLFSlideShowImpl;
+import org.apache.poi.hslf.usermodel.*;
 import org.apache.poi.xslf.usermodel.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -69,6 +67,19 @@ public class POIParse {
         }
         pgsize = pptSlideShow.getPageSize();
         pptSlideList = pptSlideShow.getSlides();
+
+        for(HSLFSlide slide : pptSlideList) {
+            for(List<HSLFTextParagraph> hslfTextParagraphList : slide.getTextParagraphs()) {
+                for(HSLFTextParagraph hslfTextParagraph : hslfTextParagraphList) {
+                    for(HSLFTextRun textRun : hslfTextParagraph.getTextRuns()) {
+                        textRun.setFontIndex(1);
+                        textRun.setFontFamily("宋体");
+                    }
+                }
+            }
+        }
+
+
         pptType = PPTType.PPT;
         len = pptSlideList.size();
 
@@ -95,6 +106,19 @@ public class POIParse {
         }
         pgsize = pptxSlideShow.getPageSize();
         pptxSlideList = pptxSlideShow.getSlides();
+
+        for(XSLFSlide xslfSlide : pptxSlideList ) {
+            for (XSLFShape shape : xslfSlide.getShapes()) {
+                if (shape instanceof XSLFTextShape) {
+                    for (XSLFTextParagraph paragraph : ((XSLFTextShape) shape)) {
+                        List<XSLFTextRun> truns = paragraph.getTextRuns();
+                        for (XSLFTextRun trun : truns) {
+                            trun.setFontFamily("宋体");
+                        }
+                    }
+                }
+            }
+        }
         pptType = PPTType.PPTX;
         len = pptxSlideList.size();
 

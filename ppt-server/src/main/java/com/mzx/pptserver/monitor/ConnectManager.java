@@ -27,6 +27,9 @@ public class ConnectManager implements InitializingBean{
     @Autowired
     private GlobalApplication globalApplication;
 
+    @Autowired
+    private SendMsgTask sendMsgTask;
+
 
 
     @Override
@@ -56,16 +59,16 @@ public class ConnectManager implements InitializingBean{
         ServerSocket server = new ServerSocket(8888);
         System.out.println("同步监听");
         while (true) {
-            Socket socket = server.accept();
+            final Socket socket = server.accept();
             logger.info("有客户端连上");
             globalApplication.getSocketPoolMap().put(socket.getRemoteSocketAddress(), socket);
 //            final SendMsgTask sendMsgTask = new SendMsgTask();
-//            new Thread() {
-//                @Override
-//                public void run() {
-//                    sendMsgTask.sendMessage(socket);
-//                }
-//            }.start();
+            new Thread() {
+                @Override
+                public void run() {
+                    sendMsgTask.sendMessage(socket);
+                }
+            }.start();
         }
     }
 }
